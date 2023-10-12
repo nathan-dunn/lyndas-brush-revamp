@@ -25,12 +25,18 @@
 
   
   onMount(async () => {
-    const imageModules = import.meta.glob('/src/lib/assets/*.jpg');
-    images = Object.keys(imageModules).map((path, index) => ({
-      src: path,
-      alt: `Description ${index + 1}`,
-      id: index + 1,
-    }));
+    const imageModules = import.meta.glob('/src/lib/assets/*.jpg');    
+    images = await Promise.all(
+      Object.entries(imageModules).map(async ([path], index) => {
+        const module = await imageModules[path]();
+        return {
+          src: module.default,
+          alt: `Description ${index + 1}`,
+          id: index + 1,
+        };
+      })
+    );
+
   });
 
 
@@ -59,6 +65,7 @@ $: if (selectedImage) {
 
 <main>
   <h1 class="title">Lynda's Brush</h1>
+
   <div class="gallery">
     {#each images as image}
     <div 
