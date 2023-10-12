@@ -6,11 +6,9 @@
   };
   let selectedImage: ImageType | null = null;
   let images: { src: string, alt: string, id: number }[] = [];
-  import LightBox from './lib/LightBox.svelte';
+
   import { onMount, onDestroy } from 'svelte';
-
-
-  
+  import LightBox from './lib/LightBox.svelte';
 
   onMount(async () => {
     const imageModules = import.meta.glob('/src/assets/*.jpg');
@@ -65,7 +63,7 @@ onDestroy(() => {
     <div 
       class="image-container" 
       on:click={() => selectImage(image)}
-      on:keydown={(event) => handleKeyDown(event, image)}
+      on:keydown={(event) => handleKeyDown(event)}
       tabindex="0" 
       role="button" 
       aria-label={image.alt}
@@ -76,7 +74,8 @@ onDestroy(() => {
   {/each}
   </div>
   {#if selectedImage}
-  <Lightbox {selectedImage} show={true} {closeLightbox} />
+  <LightBox {...selectedImage} show={true} close={closeLightbox} />
+
   {/if}
 </main>
 
