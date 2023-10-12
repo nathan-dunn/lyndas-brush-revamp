@@ -1,24 +1,16 @@
 <script lang="ts">
+  import { onMount, onDestroy } from 'svelte';
+  import LightBox from './lib/LightBox.svelte';
+
   type ImageType = {
     id: number;
     src: string;
     alt: string;
   };
+  
   let selectedImage: ImageType | null = null;
   let images: { src: string, alt: string, id: number }[] = [];
-
-  import { onMount, onDestroy } from 'svelte';
-  import LightBox from './lib/LightBox.svelte';
-
-  onMount(async () => {
-    const imageModules = import.meta.glob('/src/assets/*.jpg');
-    images = Object.keys(imageModules).map((path, index) => ({
-      src: path,
-      alt: `Description ${index + 1}`,
-      id: index + 1,
-    }));
-  });
-
+  
   const selectImage = (image: typeof images[0]) => {
     selectedImage = image;
   };
@@ -30,7 +22,18 @@
 
   let isLightboxOpen = false;
 
-// Function to handle keydown event
+
+  
+  onMount(async () => {
+    const imageModules = import.meta.glob('/src/assets/*.jpg');
+    images = Object.keys(imageModules).map((path, index) => ({
+      src: path,
+      alt: `Description ${index + 1}`,
+      id: index + 1,
+    }));
+  });
+
+
 const handleKeyDown = (event: KeyboardEvent) => {
   if (event.key === 'Escape') {
     closeLightbox();
@@ -46,18 +49,16 @@ $: if (selectedImage) {
   window.removeEventListener('keydown', handleKeyDown);
 }
 
-onDestroy(() => {
+  onDestroy(() => {
   // Cleanup the event listener if it's still set when the component is destroyed
   if (isLightboxOpen) {
     window.removeEventListener('keydown', handleKeyDown);
   }
 });
-
-  
 </script>
 
 <main>
-  <h1>Image Gallery</h1>
+  <h1 class="title">Lynda's Brush</h1>
   <div class="gallery">
     {#each images as image}
     <div 
@@ -83,6 +84,12 @@ onDestroy(() => {
   main {
     text-align: center;
   }
+
+  .title {
+    font-size: 6rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
   .gallery {
     display: flex;
     flex-wrap: wrap;
@@ -91,25 +98,25 @@ onDestroy(() => {
   }
 
   .image-container {
-    flex: 1 1 auto;
+    flex: 1 0 auto;
+    max-width: 130px; 
   }
 
   img {
-    width: 100px; /* Ensure the image doesn't overflow its container */
+    width: 120px; 
     border-radius: 6px;
-    object-fit: cover; /* To ensure images maintain aspect and don’t stretch */
   }
 
-  /* Optional: Responsive break points */
+  
   @media only screen and (max-width: 1000px) {
     .image-container {
-      flex-basis: calc(50% - 16px); /* Two images per row on medium screens */
+      flex-basis: calc(50% - 16px); 
     }
   }
 
   @media only screen and (max-width: 600px) {
     .image-container {
-      flex-basis: 100%; /* One image per row on small screens */
+      flex-basis: 100%; 
     }
   }
 </style>

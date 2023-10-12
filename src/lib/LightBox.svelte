@@ -3,10 +3,23 @@
   export let alt: string;
   export let show: boolean;
   export let close: () => void;
+
+  function handleKeyDown(event: any) {
+  if(event.key === 'Escape') {
+    close();
+  }
+}
 </script>
 
 {#if show}
-  <div class="lightbox" on:click={close}>
+  <div 
+    class="lightbox" 
+    on:click={close}
+    on:keydown={handleKeyDown}
+    tabindex="0" 
+    role="button" 
+    aria-label="Close lightbox" 
+  >
     <img {src} {alt} />
   </div>
 {/if}
