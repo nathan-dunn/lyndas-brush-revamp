@@ -25,7 +25,7 @@
 
   
   onMount(async () => {
-    const imageModules = import.meta.glob('/src/assets/*.jpg');
+    const imageModules = import.meta.glob('/src/lib/assets/*.jpg');
     images = Object.keys(imageModules).map((path, index) => ({
       src: path,
       alt: `Description ${index + 1}`,
