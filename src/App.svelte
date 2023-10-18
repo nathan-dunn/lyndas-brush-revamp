@@ -76,7 +76,7 @@ $: if (selectedImage) {
       role="button" 
       aria-label={image.alt}
     >
-    <img src={image.src} alt={image.alt} />
+    <img class="img" src={image.src} alt={image.alt} />
 
     </div>
   {/each}
@@ -96,22 +96,46 @@ $: if (selectedImage) {
     font-size: 6rem;
     font-weight: 700;
     margin-bottom: 2rem;
+
+    @media (max-width: 768px) {
+      font-size: 3rem;
+    }
   }
   .gallery {
     display: flex;
     flex-wrap: wrap;
-    gap: 2px; 
+    gap: 6px; 
     justify-content: center;
   }
 
   .image-container {
-    flex: 1 0 auto;
-    max-width: 130px; 
+    width: 120px; 
+    height: 160px;
+    border-radius: 6px;
+    @media (max-width: 768px) {
+      width: 60px;
+      height: 80px;
+    }
   }
 
-  img {
-    width: 120px; 
+  .img {
+    width: 120px;
+    height: 160px;
     border-radius: 6px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.4s ease-in-out; 
+
+    @media (max-width: 768px) {
+      width: 60px; 
+      height: 80px;
+    }
+    &:hover {
+      transform: translate(10px, -10px); 
+      box-shadow: 
+       -10px 10px 5px 0px rgba(0, 0, 0, 0.3),  
+        0px 10px 5px 0px rgba(0, 0, 0, 0.3);  
+    }
   }
 
   
