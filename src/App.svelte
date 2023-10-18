@@ -106,14 +106,18 @@ $: if (selectedImage) {
     flex-wrap: wrap;
     gap: 6px; 
     justify-content: center;
+
+    @media (max-width: 768px) {
+      gap: 3px; 
+    }
   }
 
   .image-container {
-    width: 120px; 
+    max-width: 120px; 
     height: 160px;
     border-radius: 6px;
     @media (max-width: 768px) {
-      width: 60px;
+      max-width: 60px;
       height: 80px;
     }
   }
@@ -133,8 +137,8 @@ $: if (selectedImage) {
     &:hover {
       transform: translate(10px, -10px); 
       box-shadow: 
-       -10px 10px 5px 0px rgba(0, 0, 0, 0.3),  
-        0px 10px 5px 0px rgba(0, 0, 0, 0.3);  
+       -10px 10px 5px 0px rgba(0, 0, 0, 0.3),  /* left border with blur */
+        0px 10px 5px 0px rgba(0, 0, 0, 0.3);  /* bottom border with blur */
     }
   }
 
