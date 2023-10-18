@@ -8,8 +8,7 @@
     "build": "vite build",
     "preview": "npm run build && vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "surge": "npm run build && surge dist --domain https://lyndas-brush.surge.sh",
-    "surge:test": "npm run build && surge dist https://lyndas-brush-test.surge.sh"
+    "surge": "npm run build && surge dist --domain https://lyndas-brush.surge.sh"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
